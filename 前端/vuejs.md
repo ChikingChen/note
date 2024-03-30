@@ -1,28 +1,12 @@
-# 前端
+# vuejs
 
-## HTML
-
-标签：单标签，双标签
-
-\<slot /\> 单标签
-
-\<ChildComp\>\</ChildComp\>双标签
-
-### 文件结构
-
-\<!DOCTYPE html\> 标明html文件开始
-
-\<html\>\</html\>
-
-## vuejs
-
-### 计算属性
+## 计算属性
 
 computed(func)
 
 对现有变量计算而后返回经过加工的变量
 
-### 模板引用
+## 模板引用
 
 \<p ref='name'\>hello\</p\>
 
@@ -36,33 +20,33 @@ name.value
 
 模板引用的具体对象
 
-### watch
+## watch
 
 watch(num, func)
 
 num变化的时候，调用func
 
-### 箭头函数
+## 箭头函数
 
 (a1, a2, ...) => { ... }
 
 无函数名，箭头前为参数，箭头后为函数体
 
-### 列表渲染
+## 列表渲染
 
 \<li v-for"todo in todos"\>
 
-### 条件渲染
+## 条件渲染
 
 \<h1 v-if="awesome"\>\</h1\>
 
 \<h1 v-else\>\</h1\>
 
-### 对象
+## 对象
 
 ref(a) 引用名为a
 
-### Props
+## Props
 
 将父组件的内容传入子组件
 
@@ -80,7 +64,7 @@ const props = defineProps({
 
 \<ChildComp :msg="greeting"/\>
 
-### Emits
+## Emits
 
 将子组件的内容传入父组件
 
@@ -94,7 +78,7 @@ func事件名称，a1,a2...时间参数
 
 \<ChildComp @func = ""\>
 
-### 插槽
+## 插槽
 
 \<ChildComp\>...\</ChildComp\>
 
@@ -108,28 +92,25 @@ func事件名称，a1,a2...时间参数
 
 子组件的内容放入父组件中
 
-### 周期函数
+## 周期函数
 
 import {'mounted'} from 'vue'
 
-## 前后端连接
+## provide/inject
 
-### axios
+可以将父组件可以跨级将内容传递给子组件
 
-基本使用方法
+父组件使用provide将内容传递给注入名，子组件函数使用inject函数读取注入名的内容
 
-axios.post('路径', 参数).then(
+- 依赖
 
-​	function (response){
+  ```JavaScript
+  app.provide('message', 'hello!')
+  ```
 
-​		alert(response.data) 
+- 注入
 
-​	}
+  ```JavaScript
+  const message = inject('message')
+  ```
 
-)
-
-路径：servlet访问路径（url访问地址）
-
-参数：向服务端发送的数据（像后端发送数据）
-
-response.data：浏览器返回参数（从后端接受数据）
