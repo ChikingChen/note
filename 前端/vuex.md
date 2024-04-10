@@ -28,12 +28,12 @@ import { createStore } from 'vuex'
 
 // 创建一个新的 store 实例
 const store = createStore({
-  state () {
+  state () { // 变量
     return {
       count: 0
     }
   },
-  mutations: {
+  mutations: { // 方法
     increment (state) {
       state.count++
     }
@@ -54,17 +54,67 @@ store.commit('increment')
 console.log(store.state.count) // -> 1
 ```
 
-使用this.$store调用被定义的store
-
-```JavaScript
-methods: {
-  increment() {
-    this.$store.commit('increment')
-    console.log(this.$store.state.count)
-  }
-}
-```
+使用getStore、useStore调用被定义的store
 
 ## State
 
-单一状态树——一个状态包含了全部的应用层级状态，唯一数据源，每个应用只包含一个store
+单一状态树——一个状态包含了全部的应用层级状态，唯一数据源，每个应用只包含一个store实例
+
+store实例中读取状态的方式：在**计算属性**中返回某个值
+
+```js
+computed:{
+	count(){
+		return store.state.count
+	}
+}
+```
+
+### [mapState辅助函数](https://vuex.vuejs.org/zh/guide/state.html#mapstate-%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0)
+
+替代**计算属性**，减少冗余
+
+```js
+import { mapState } from 'vuex'
+
+export default {
+  // ...
+  computed: mapState({
+    // 箭头函数可使代码更简练
+    count: state => state.count,
+
+    // 传字符串参数 'count' 等同于 `state => state.count`
+    countAlias: 'count',
+
+    // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+    countPlusLocalState (state) {
+      return state.count + this.localCount
+    }
+  })
+}
+```
+
+## Mutation
+
+更改Vuex的store中状态的唯一方法
+
+### 如何调用mutation
+
+```js
+store.commit('increment')
+```
+
+### 传入额外的参数
+
+```js
+mutations: {
+  increment (state, n) {
+    state.count += n
+  }
+}
+
+store.commit('increment', 10)
+```
+
+第二个参数可以是一个对象，增加可读性
+
