@@ -2,6 +2,77 @@
 
 **集中式**存储管理应用的所有组件的状态
 
+## vuex配置
+
+配置步骤
+
+- 创建store文件夹并在index.js中注册
+- 在main.js中挂载
+
+配置的具体内容
+
+- main.js
+
+  ```js
+  import App from './App'
+  import store from './store' // 从store文件夹中导入store
+  
+  // #ifndef VUE3
+  import Vue from 'vue'
+  import './uni.promisify.adaptor'
+  Vue.config.productionTip = false
+  Vue.prototype.$store = store // 在vue2中注册store
+  App.mpType = 'app'
+  const app = new Vue({
+  	...App,
+  	store // 在vue2中注册store
+  })
+  app.$mount()
+  // #endif
+  
+  // #ifdef VUE3
+  import { createSSRApp } from 'vue'
+  export function createApp() {
+  	const app = createSSRApp(App)
+  	app.use(store) // 在vue3中注册store
+  	return {
+  		app
+  	}
+  }
+  export const Account = '123'
+  // #endif
+  ```
+
+- store/index.js
+
+  ```js
+  // 注册vuex
+  // #ifndef VUE3
+  import Vue from 'vue'
+  import Vuex from 'vuex'
+  Vue.use(Vuex)
+  const store = new Vuex.Store({
+  // #endif
+  
+  // #ifdef VUE3
+  import { createStore } from 'vuex'
+  const store = createStore({
+  // #endif
+  // store具体内容
+  	state: {
+  		Account: ""
+  	},
+  	mutations: {
+  		login(state, Account) {
+  			state.Account = Account
+  		}
+  	}
+  })
+  
+  export default store
+  
+  ```
+
 ## 状态自管理应用
 
 - 状态，vue变量
