@@ -34,7 +34,9 @@ num变化的时候，调用func
 
 ## 列表渲染
 
-\<li v-for"todo in todos"\>
+\<li v-for="todo in todos"\>\</li\>
+
+li组件内部的组件会被循环多次放置
 
 ## 条件渲染
 
