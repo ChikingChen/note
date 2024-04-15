@@ -59,4 +59,19 @@
       return decryted_data.decode('utf-8')
   ```
 
+### 如何使用
+
+- 加密
+
+  ```python
+  code = encrypt_message(code).hex()
+  ```
+
+- 解密
+
+  ```python
+  psword = bytes.fromhex(psword)
+  psword = decrypt_message(psword)
+  ```
+
   

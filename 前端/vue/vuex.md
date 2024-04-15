@@ -189,3 +189,9 @@ store.commit('increment', 10)
 
 第二个参数可以是一个对象，增加可读性
 
+## vue中调用state
+
+```js
+this.$store.state
+```
+

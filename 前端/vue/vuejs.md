@@ -6,6 +6,55 @@ computed(func)
 
 对现有变量计算而后返回经过加工的变量
 
+### 可写计算属性
+
+计算属性默认只读，即只能通过输入得到输出
+
+但可以通过设定getter函数和setter函数来通过设定输出来得到输入
+
+```vue
+<script setup>
+import { ref, computed } from 'vue'
+
+const firstName = ref('John')
+const lastName = ref('Doe')
+
+const fullName = computed({
+  // getter
+  get() {
+    return firstName.value + ' ' + lastName.value
+  },
+  // setter
+  set(newValue) {
+    // 注意：我们这里使用的是解构赋值语法
+    [firstName.value, lastName.value] = newValue.split(' ')
+  }
+})
+</script>
+```
+
+- get函数
+
+  一般认为的计算属性，基于响应式变量得到结果
+
+- set函数
+
+  通过设定fullName.value来修改firstName和lastName
+
+### 计算属性传参
+
+```js
+computed:{
+	triangleStyle() {
+		return (index) => {
+			return index == this.cityShowIndex ? "/static/left.png" : "/static/down.png"
+		}
+	}
+},
+```
+
+计算属性传参方式：使用闭包的形式传参
+
 ## 模板引用
 
 \<p ref='name'\>hello\</p\>
