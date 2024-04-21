@@ -60,6 +60,26 @@ from django.db.models import CharField
 
     被指向的对象被删除后当前数据表如何处理
 
+  如果数据表的某个属性被指定为外键属性，则要求对象参数必须为外键指向的表的实例，需要使用get函数获得
+
+  ```python
+  @csrf_exempt
+  def add(request):
+      if request.method == 'GET':
+          try:
+              # 连接数据库
+              city = request.GET['city']
+              city = CityTable.objects.get(city=city) # get获得CityTable实例
+              county = request.GET['county']
+              CityCountyTable(city=city, county=county).save() # CityTable实例为city变量参数
+              return HttpResponse(status=200)
+          except ValueError as e:
+              print(e)
+              return HttpResponse(status=400)
+      else:
+          return HttpResponse(status=405)
+  ```
+
 - 双主键
 
   使用class Meta中的联合主键
@@ -80,5 +100,57 @@ from django.db.models import CharField
     UniqueConstraint(fields=['room', 'date'], name='unique_booking')
     ```
 
-## QuerySet
+## 数据库的增删改查
+
+创建数据模型后，Django提供一套抽象API，允许增删改查
+
+- 增
+
+  一个模型类的实例代表一行记录
+
+  使用model对象的save方法
+
+  ```python
+  from blog.models import Blog
+  b = Blog(name='Beatles Blog', tagline='All the latest Beatles news.')
+  b.save()
+  ```
+
+  保存一个对象即为保存一条记录
+
+- 删
+
+  直接对QuerySet对象使用delete操作
+
+- 改
+
+  直接对QuerySet中的对象执行update操作
+
+- 查
+
+  使用模型类的manager（objects）来获取一个QuerySet
+
+  一个QuerySet相当于一个select，一个filter相当于一个where
+
+```python
+AccountTable.objects.all()
+```
+
+返回包含整个数据表的QuerySet
+
+```python
+.filter(email=email)
+```
+
+数据库查询条件语句
+
+```python
+.values('password')
+```
+
+查询指定列
+
+```python
+AccountTable.objects.all().filter(email=email).values('password')
+```
 
