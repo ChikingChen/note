@@ -230,3 +230,24 @@ $$
 5. 修正主方向并计算关键点领域的$4\times 4$梯度直方图
 
    使用关键点领域的梯度直方图向量来作为关键点的向量
+
+# surf
+
+## 积分图
+
+使用二维前缀和快速计算限定区域内所有像素的和
+
+## $Hessian$矩阵近似
+
+$Hessian$矩阵
+$$
+H(x,y,\sigma)=
+\begin{pmatrix}
+L_{xx}&L_{xy}\\
+L_{xy}&L_{yy}
+\end{pmatrix}
+$$
+通过卷积计算$L_{xx},L_{xy},L_{yy}$
+$$
+det(H)=L_{xx}L_{yy}-L_{xy}^2
+$$
